@@ -19,7 +19,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('transactions', \App\Http\Controllers\StoreController::class);
-
-//Route::get('/transactions', [\App\Http\Controllers\StoreController::class, 'index']);
-//Route::post('/transactions', [\App\Http\Controllers\StoreController::class, 'store']);
-//Route::get('/transactions/{id}', [\App\Http\Controllers\StoreController::class, 'update']);
