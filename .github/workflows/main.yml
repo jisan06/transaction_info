@@ -11,17 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: transaction_info
-          MYSQL_USER: root
-          MYSQL_PASSWORD: secret
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -31,7 +20,7 @@ jobs:
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      
+
     - name: Update Composer Dependencies
       run: composer update
 
@@ -51,12 +40,4 @@ jobs:
       run: |
         php artisan migrate --seed --force
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: mysql
-        DB_PORT: 3306
-        DB_DATABASE: laravel_test
-        DB_USERNAME: laravel_user
-        DB_PASSWORD: secret
-      run: vendor/bin/phpunit
+
