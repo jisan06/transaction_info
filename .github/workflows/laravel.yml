@@ -15,8 +15,8 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel_test
-          MYSQL_USER: laravel_user
+          MYSQL_DATABASE: transaction_info
+          MYSQL_USER: root
           MYSQL_PASSWORD: secret
         ports:
           - 3306:3306
@@ -31,6 +31,12 @@ jobs:
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      
+    - name: Update Composer Dependencies
+      run: composer update
+
+    - name: Clear Composer Cache
+      run: composer clear-cache
 
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
