@@ -2,31 +2,30 @@ name: Laravel
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
 
-    - uses: actions/checkout@v3
-
-    - name: Update Composer Dependencies
-      run: composer update
-    
-    - name: Run composer install
-      run: composer install -n --prefer-dist
+    - name: Install Dependencies
+      run: |
+        composer install --no-scripts --no-progress --prefer-dist
 
     - name: Prepare Laravel ENV
       run: |
-          cp .env.ci .env
-          php artisan key:generate
+        cp .env.example .env
+        php artisan key:generate
 
-    - name: Run artisan tests
+    - name: Run Laravel Tests
       run: php artisan test
-
-
