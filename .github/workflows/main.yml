@@ -20,7 +20,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        composer install --no-scripts --no-progress --prefer-dist
+        composer update --no-scripts --no-progress --prefer-dist
 
     - name: Prepare Laravel ENV
       run: |
